@@ -1,0 +1,347 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+:root {
+  /* Updated color scheme for spiritual Reiki theme */
+  --background: #ffffff;
+  --foreground: #374151;
+  --card: #f0f0f0;
+  --card-foreground: #6b5b9a;
+  --popover: #ffffff;
+  --popover-foreground: #374151;
+  --primary: #6b5b9a;
+  --primary-foreground: #ffffff;
+  --secondary: #f5c000;
+  --secondary-foreground: #374151;
+  --muted: #f0f0f0;
+  --muted-foreground: #6b5b9a;
+  --accent: #f5c000;
+  --accent-foreground: #ffffff;
+  --destructive: #be123c;
+  --destructive-foreground: #ffffff;
+  --border: #e0e0e0;
+  --input: #ffffff;
+  --ring: #f5c000;
+  --chart-1: #6b5b9a;
+  --chart-2: #f5c000;
+  --chart-3: #ffffff;
+  --chart-4: #374151;
+  --chart-5: #f0f0f0;
+  --radius: 0.5rem;
+  --sidebar: #ffffff;
+  --sidebar-foreground: #374151;
+  --sidebar-primary: #6b5b9a;
+  --sidebar-primary-foreground: #ffffff;
+  --sidebar-accent: #f5c000;
+  --sidebar-accent-foreground: #374151;
+  --sidebar-border: #e0e0e0;
+  --sidebar-ring: #f5c000;
+
+  /* Added custom spiritual gradient variables */
+  --spiritual-gradient: linear-gradient(135deg, #6b5b9a 0%, #4169e1 50%, #f5c000 100%);
+  --violet-glow: #8e44ad;
+  --royal-blue: #4169e1;
+  --golden-glow: #ffd700;
+  --light-lavender: #e6e6fa;
+}
+
+.dark {
+  /* Enhanced dark theme colors for better contrast and spiritual feel */
+  --background: #0f0f23;
+  --foreground: #e6e6fa;
+  --card: #1a1a2e;
+  --card-foreground: #e6e6fa;
+  --popover: #1a1a2e;
+  --popover-foreground: #e6e6fa;
+  --primary: #9d4edd;
+  --primary-foreground: #ffffff;
+  --secondary: #ffd700;
+  --secondary-foreground: #0f0f23;
+  --muted: #16213e;
+  --muted-foreground: #a0a0a0;
+  --accent: #ffd700;
+  --accent-foreground: #0f0f23;
+  --destructive: #ff6b6b;
+  --destructive-foreground: #ffffff;
+  --border: #2d3748;
+  --input: #1a1a2e;
+  --ring: #ffd700;
+  --chart-1: #9d4edd;
+  --chart-2: #ffd700;
+  --chart-3: #4169e1;
+  --chart-4: #e6e6fa;
+  --chart-5: #2d3748;
+  --sidebar: #1a1a2e;
+  --sidebar-foreground: #e6e6fa;
+  --sidebar-primary: #9d4edd;
+  --sidebar-primary-foreground: #ffffff;
+  --sidebar-accent: #ffd700;
+  --sidebar-accent-foreground: #0f0f23;
+  --sidebar-border: #2d3748;
+  --sidebar-ring: #ffd700;
+
+  /* Updated spiritual gradient for dark mode */
+  --spiritual-gradient: linear-gradient(135deg, #9d4edd 0%, #4169e1 50%, #ffd700 100%);
+  --violet-glow: #9d4edd;
+  --royal-blue: #4169e1;
+  --golden-glow: #ffd700;
+  --light-lavender: #e6e6fa;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-ring: var(--sidebar-ring);
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+    /* Added smooth transitions for all elements */
+    transition: color 0.3s ease, background-color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+  }
+  body {
+    @apply bg-background text-foreground;
+    /* Added smooth scrolling and better font rendering */
+    scroll-behavior: smooth;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  /* Enhanced spiritual animation keyframes with more variety */
+  @keyframes float {
+    0%,
+    100% {
+      transform: translateY(0px) rotate(0deg);
+    }
+    25% {
+      transform: translateY(-5px) rotate(1deg);
+    }
+    50% {
+      transform: translateY(-10px) rotate(0deg);
+    }
+    75% {
+      transform: translateY(-5px) rotate(-1deg);
+    }
+  }
+
+  @keyframes glow {
+    0%,
+    100% {
+      box-shadow: 0 0 20px rgba(157, 78, 221, 0.3), 0 0 40px rgba(157, 78, 221, 0.1);
+    }
+    50% {
+      box-shadow: 0 0 30px rgba(157, 78, 221, 0.6), 0 0 60px rgba(157, 78, 221, 0.2);
+    }
+  }
+
+  @keyframes sparkle {
+    0%,
+    100% {
+      opacity: 0;
+      transform: scale(0) rotate(0deg);
+    }
+    50% {
+      opacity: 1;
+      transform: scale(1) rotate(180deg);
+    }
+  }
+
+  @keyframes fadeInUp {
+    from {
+      opacity: 0;
+      transform: translateY(30px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes slideInLeft {
+    from {
+      opacity: 0;
+      transform: translateX(-30px);
+    }
+    to {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
+
+  @keyframes slideInRight {
+    from {
+      opacity: 0;
+      transform: translateX(30px);
+    }
+    to {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
+
+  @keyframes pulse {
+    0%,
+    100% {
+      transform: scale(1);
+    }
+    50% {
+      transform: scale(1.05);
+    }
+  }
+
+  @keyframes shimmer {
+    0% {
+      background-position: -200% 0;
+    }
+    100% {
+      background-position: 200% 0;
+    }
+  }
+
+  @keyframes breathe {
+    0%,
+    100% {
+      transform: scale(1);
+      opacity: 0.8;
+    }
+    50% {
+      transform: scale(1.02);
+      opacity: 1;
+    }
+  }
+
+  /* Enhanced spiritual effect classes */
+  .spiritual-gradient {
+    background: var(--spiritual-gradient);
+    background-size: 200% 200%;
+    animation: shimmer 3s ease-in-out infinite;
+  }
+
+  .float-animation {
+    animation: float 4s ease-in-out infinite;
+  }
+
+  .glow-effect {
+    animation: glow 3s ease-in-out infinite;
+  }
+
+  .sparkle-effect {
+    animation: sparkle 2s ease-in-out infinite;
+  }
+
+  .fade-in-up {
+    animation: fadeInUp 0.8s ease-out forwards;
+  }
+
+  .slide-in-left {
+    animation: slideInLeft 0.6s ease-out forwards;
+  }
+
+  .slide-in-right {
+    animation: slideInRight 0.6s ease-out forwards;
+  }
+
+  .pulse-animation {
+    animation: pulse 2s ease-in-out infinite;
+  }
+
+  .breathe-animation {
+    animation: breathe 4s ease-in-out infinite;
+  }
+
+  /* Added staggered animation delays for sequential elements */
+  .stagger-1 {
+    animation-delay: 0.1s;
+  }
+  .stagger-2 {
+    animation-delay: 0.2s;
+  }
+  .stagger-3 {
+    animation-delay: 0.3s;
+  }
+  .stagger-4 {
+    animation-delay: 0.4s;
+  }
+  .stagger-5 {
+    animation-delay: 0.5s;
+  }
+  .stagger-6 {
+    animation-delay: 0.6s;
+  }
+
+  /* Enhanced hover effects for better interactivity */
+  .hover-lift {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  .hover-lift:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+  }
+
+  .hover-glow:hover {
+    box-shadow: 0 0 20px rgba(157, 78, 221, 0.4);
+  }
+
+  /* Smooth scrollbar styling for better UX */
+  ::-webkit-scrollbar {
+    width: 8px;
+  }
+  ::-webkit-scrollbar-track {
+    background: var(--muted);
+  }
+  ::-webkit-scrollbar-thumb {
+    background: var(--primary);
+    border-radius: 4px;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: var(--accent);
+  }
+
+  /* Enhanced focus states for accessibility */
+  *:focus-visible {
+    outline: 2px solid var(--ring);
+    outline-offset: 2px;
+    border-radius: 4px;
+  }
+
+  /* Smooth theme transition */
+  html {
+    transition: background-color 0.3s ease, color 0.3s ease;
+  }
+}
