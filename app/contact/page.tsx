@@ -37,23 +37,23 @@ export default function ContactPage() {
     e.preventDefault()
     setIsSubmitting(true)
 
-    // Build WhatsApp message
-    const whatsappNumber = "918980416700" // Use country code
-    const message =
+    // Construct WhatsApp message
+    const whatsappNumber = "918980416700" // Country code + number
+    const text =
       `New Reiki Website Contact Form Submission:%0A` +
-      `Name: ${encodeURIComponent(formData.name)}%0A` +
-      `Email: ${encodeURIComponent(formData.email)}%0A` +
-      `Phone: ${encodeURIComponent(formData.phone)}%0A` +
-      `Subject: ${encodeURIComponent(formData.subject)}%0A` +
-      `Message: ${encodeURIComponent(formData.message)}`
+      `Name: ${formData.name}%0A` +
+      `Email: ${formData.email}%0A` +
+      (formData.phone ? `Phone: ${formData.phone}%0A` : "") +
+      `Subject: ${formData.subject}%0A` +
+      `Message: ${formData.message}`
 
     // Redirect to WhatsApp with pre-filled message
-    window.location.href = `https://wa.me/${whatsappNumber}?text=${message}`
+    window.location.href = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(text)}`
 
     setIsSubmitting(false)
     setIsSubmitted(true)
 
-    // Optionally reset form after redirect (not strictly needed)
+    // Reset form after 3 seconds
     setTimeout(() => {
       setIsSubmitted(false)
       setFormData({
