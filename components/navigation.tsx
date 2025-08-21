@@ -43,7 +43,7 @@ export function Navigation() {
           <Link href="/" className="flex items-center space-x-2 group">
             <div className="w-10 h-10 rounded-full spiritual-gradient flex items-center justify-center glow-effect transition-all duration-300 group-hover:scale-110 overflow-hidden">
               <img
-                src="/placeholder-logo.png"
+                src="/channels4_profile.jpg"
                 alt="Shivshankar Reiki Logo"
                 className="w-8 h-8 object-contain"
                 style={{ minWidth: 24, minHeight: 24 }}
