@@ -41,8 +41,13 @@ export function Navigation() {
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
           <Link href="/" className="flex items-center space-x-2 group">
-            <div className="w-10 h-10 rounded-full spiritual-gradient flex items-center justify-center glow-effect transition-all duration-300 group-hover:scale-110">
-              <span className="text-white font-bold text-lg font-serif">S</span>
+            <div className="w-10 h-10 rounded-full spiritual-gradient flex items-center justify-center glow-effect transition-all duration-300 group-hover:scale-110 overflow-hidden">
+              <img
+                src="/placeholder-logo.png"
+                alt="Shivshankar Reiki Logo"
+                className="w-8 h-8 object-contain"
+                style={{ minWidth: 24, minHeight: 24 }}
+              />
             </div>
             <div className="hidden sm:block">
               <h1 className="font-serif font-bold text-lg text-primary transition-colors duration-300">
