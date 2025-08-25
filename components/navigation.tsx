@@ -45,7 +45,7 @@ export function Navigation() {
               <img
                 src="/channels4_profile.jpg"
                 alt="Shivshankar Reiki Logo"
-                className="w-8 h-8 object-contain"
+                className="w-8 h-8 object-contain rounded-full"
                 style={{ minWidth: 24, minHeight: 24 }}
               />
             </div>
