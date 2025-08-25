@@ -23,37 +23,64 @@ const FLAGS = [
   { code: "NZ", name: "New Zealand" },
 ]
 
-// Try to use local flag images from /public/flags/IN.png, fallback to flagcdn.com
+
+// Always use online flag images from flagcdn.com
 function getFlagUrl(code: string) {
-  return `/flags/${code}.png`
+  return `https://flagcdn.com/w80/${code.toLowerCase()}.png`
 }
 
 export const FlagCarousel: React.FC = () => {
-  const [start, setStart] = useState(0)
-  const visibleCount = 7
+  const [angle, setAngle] = useState(0)
+  const flagCount = FLAGS.length
+  const visibleCount = 7 // how many flags to show in the arc
+  const radius = 90 // px, radius of the 3D arc
+
   useEffect(() => {
     const interval = setInterval(() => {
-      setStart((prev) => (prev + 1) % FLAGS.length)
+      setAngle((prev) => prev - (360 / flagCount))
     }, 1800)
     return () => clearInterval(interval)
-  }, [])
-  // Show a slice of flags, wrap around
-  const flagsToShow = Array.from({ length: visibleCount }, (_, i) => FLAGS[(start + i) % FLAGS.length])
+  }, [flagCount])
+
+  // 3D carousel effect: arrange flags in a circle and rotate
   return (
-    <div className="flex justify-center items-center gap-2 mb-4">
-      {flagsToShow.map((flag) => (
-        <div key={flag.code} className="w-12 h-12 rounded-full overflow-hidden border-2 border-primary bg-white flex items-center justify-center shadow-md">
-          <img
-            src={getFlagUrl(flag.code)}
-            alt={flag.name + ' flag'}
-            className="w-full h-full object-cover"
-            onError={(e) => {
-              // fallback to flagcdn if local not found
-              (e.currentTarget as HTMLImageElement).src = `https://flagcdn.com/w80/${flag.code.toLowerCase()}.png`
-            }}
-          />
-        </div>
-      ))}
+    <div className="relative w-64 h-28 mx-auto mb-4" style={{ perspective: 600 }}>
+      <div
+        className="absolute left-1/2 top-1/2"
+        style={{
+          transform: `translate(-50%, -50%) rotateY(${angle}deg)`,
+          transformStyle: 'preserve-3d',
+          width: '100%',
+          height: '100%',
+        }}
+      >
+        {FLAGS.map((flag, i) => {
+          // Only render visibleCount flags for performance
+          const rel = (i - Math.round((-angle / (360 / flagCount))) + flagCount) % flagCount
+          if (rel > Math.floor(visibleCount / 2) && rel < flagCount - Math.floor(visibleCount / 2)) return null
+          const theta = (360 / flagCount) * i
+          return (
+            <div
+              key={flag.code}
+              className="absolute left-1/2 top-1/2 w-14 h-14 rounded-full overflow-hidden border-2 border-primary bg-white flex items-center justify-center shadow-md"
+              style={{
+                transform:
+                  `rotateY(${theta}deg) translateZ(${radius}px) translate(-50%, -50%) scale(${rel === 0 ? 1.15 : 1})`,
+                zIndex: rel === 0 ? 2 : 1,
+                boxShadow: rel === 0 ? '0 0 16px 2px #eab30855' : undefined,
+                transition: 'transform 0.7s cubic-bezier(.4,2,.6,1), box-shadow 0.7s',
+              }}
+            >
+              <img
+                src={getFlagUrl(flag.code)}
+                alt={flag.name + ' flag'}
+                className="w-full h-full object-cover"
+                draggable={false}
+              />
+            </div>
+          )
+        })}
+      </div>
     </div>
   )
 }
