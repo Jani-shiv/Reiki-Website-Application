@@ -32,19 +32,19 @@ function getFlagUrl(code: string) {
 export const FlagCarousel: React.FC = () => {
   const [angle, setAngle] = useState(0)
   const flagCount = FLAGS.length
-  const visibleCount = 7 // how many flags to show in the arc
-  const radius = 90 // px, radius of the 3D arc
+  const visibleCount = 5 // show fewer flags for better focus
+  const radius = 120 // increased radius for better depth
 
   useEffect(() => {
     const interval = setInterval(() => {
       setAngle((prev) => prev - (360 / flagCount))
-    }, 1800)
+    }, 2200) // slower rotation for better visibility
     return () => clearInterval(interval)
   }, [flagCount])
 
-  // 3D carousel effect: arrange flags in a circle and rotate
+  // 3D carousel effect: main flag in front, others behind
   return (
-    <div className="relative w-64 h-28 mx-auto mb-4" style={{ perspective: 600 }}>
+    <div className="relative w-80 h-32 mx-auto mb-4" style={{ perspective: 1000 }}>
       <div
         className="absolute left-1/2 top-1/2"
         style={{
@@ -55,20 +55,47 @@ export const FlagCarousel: React.FC = () => {
         }}
       >
         {FLAGS.map((flag, i) => {
-          // Only render visibleCount flags for performance
-          const rel = (i - Math.round((-angle / (360 / flagCount))) + flagCount) % flagCount
-          if (rel > Math.floor(visibleCount / 2) && rel < flagCount - Math.floor(visibleCount / 2)) return null
           const theta = (360 / flagCount) * i
+          const rel = (i - Math.round((-angle / (360 / flagCount))) + flagCount) % flagCount
+          
+          // Only show visibleCount flags around the main one
+          if (rel > Math.floor(visibleCount / 2) && rel < flagCount - Math.floor(visibleCount / 2)) return null
+          
+          const isFront = rel === 0
+          const isNearFront = rel === 1 || rel === flagCount - 1
+          
+          // Calculate size and opacity based on position
+          let scale = 0.7
+          let opacity = 0.4
+          let zIndex = 0
+          let blur = 2
+          
+          if (isFront) {
+            scale = 1.4 // main flag much larger
+            opacity = 1
+            zIndex = 10
+            blur = 0
+          } else if (isNearFront) {
+            scale = 0.9 // side flags medium
+            opacity = 0.7
+            zIndex = 5
+            blur = 1
+          }
+          
           return (
             <div
               key={flag.code}
-              className="absolute left-1/2 top-1/2 w-14 h-14 rounded-full overflow-hidden border-2 border-primary bg-white flex items-center justify-center shadow-md"
+              className="absolute left-1/2 top-1/2 w-16 h-16 rounded-full overflow-hidden border-2 border-primary bg-white flex items-center justify-center shadow-lg"
               style={{
-                transform:
-                  `rotateY(${theta}deg) translateZ(${radius}px) translate(-50%, -50%) scale(${rel === 0 ? 1.15 : 1})`,
-                zIndex: rel === 0 ? 2 : 1,
-                boxShadow: rel === 0 ? '0 0 16px 2px #eab30855' : undefined,
-                transition: 'transform 0.7s cubic-bezier(.4,2,.6,1), box-shadow 0.7s',
+                transform: `rotateY(${theta}deg) translateZ(${radius}px) translate(-50%, -50%) scale(${scale})`,
+                opacity,
+                zIndex,
+                filter: blur > 0 ? `blur(${blur}px)` : 'none',
+                boxShadow: isFront 
+                  ? '0 0 25px 5px rgba(234, 179, 8, 0.6), 0 8px 32px rgba(0,0,0,0.3)' 
+                  : '0 4px 12px rgba(0,0,0,0.2)',
+                transition: 'all 0.8s cubic-bezier(0.4, 0, 0.2, 1)',
+                border: isFront ? '3px solid #eab308' : '2px solid #94a3b8',
               }}
             >
               <img
@@ -76,7 +103,15 @@ export const FlagCarousel: React.FC = () => {
                 alt={flag.name + ' flag'}
                 className="w-full h-full object-cover"
                 draggable={false}
+                style={{
+                  filter: isFront ? 'saturate(1.2) brightness(1.1)' : 'saturate(0.8)',
+                }}
               />
+              {isFront && (
+                <div className="absolute -bottom-8 left-1/2 transform -translate-x-1/2 text-xs font-medium text-primary whitespace-nowrap">
+                  {flag.name}
+                </div>
+              )}
             </div>
           )
         })}
