@@ -5,6 +5,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Badge } from "@/components/ui/badge"
 import Link from "next/link"
 import { Heart, Globe, Users, Star, Award, BookOpen, Sparkles, Play } from "lucide-react"
+import { FlagCarousel } from "./FlagCarousel"
 
 export default function AboutPage() {
   return (
@@ -74,10 +75,8 @@ export default function AboutPage() {
               <div className="relative">
                 <div className="w-full h-96 bg-gradient-to-br from-primary/20 to-accent/20 rounded-2xl flex items-center justify-center">
                   <div className="text-center">
-                    <div className="w-24 h-24 mx-auto mb-4 rounded-full spiritual-gradient flex items-center justify-center glow-effect">
-                      <Heart className="w-12 h-12 text-white" />
-                    </div>
-                    <h3 className="text-2xl font-serif font-bold text-primary mb-2">15+ Countries</h3>
+                    <FlagCarousel />
+                    <h3 className="text-2xl font-serif font-bold text-primary mb-2">18+ Countries</h3>
                     <p className="text-muted-foreground">Spreading healing worldwide</p>
                   </div>
                 </div>
